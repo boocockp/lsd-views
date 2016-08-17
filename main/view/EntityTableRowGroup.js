@@ -46,11 +46,11 @@ let EntityTableRowGroup = React.createClass({
         if (typeof itemLinkPropertyName === 'string') {
             const linkPropertyDesc = this.entityDescriptor().propertyDescriptor(itemLinkPropertyName)
             const linkPropertyValue = item[itemLinkPropertyName]
-            const entityManager = this.context.getEntityManager(linkPropertyDesc.itemType)
-            return <Link href={entityManager.linkHref(linkPropertyValue)}>{displayItem}</Link>
+            const navigationManager = this.context.getNavigationManager(linkPropertyDesc.itemType)
+            return <Link href={navigationManager.pathTo(linkPropertyValue)}>{displayItem}</Link>
         } else {
-            const entityManager = this.context.getEntityManager(item.constructor)
-            return <Link href={entityManager.linkHref(item)}>{displayItem}</Link>
+            const navigationManager = this.context.getNavigationManager(item.constructor)
+            return <Link href={navigationManager.pathTo(item)}>{displayItem}</Link>
         }
     },
 
@@ -70,7 +70,7 @@ EntityTableRowGroup.propTypes = {
 }
 
 EntityTableRowGroup.contextTypes = {
-    getEntityManager: PropTypes.func
+    getNavigationManager: PropTypes.func
 }
 
 module.exports = EntityTableRowGroup

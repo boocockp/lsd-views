@@ -8,7 +8,8 @@ const EntityViewFn = () => require('./EntityView');
 const EntityListEditable = require('./EntityListEditable');
 const DisplayItem = require('./DisplayItem');
 const DateTimeField = require('react-bootstrap-datetimepicker')
-const Reference = require('../type/Reference')
+
+const {Types, Reference} = require('lsd-metadata')
 
 const FormItem = React.createClass({
     getInitialState: function () {
@@ -116,7 +117,7 @@ const FormItem = React.createClass({
             const editItemFn = (item, onSave) => <EntityView entity={item} onSave={onSave} />
             return <EntityListEditable items={value} itemType={propDesc.itemType} displayItem={displayItemFn} editItem={editItemFn} onChange={this.handleListChange}/>
         }
-        if (type === Reference) {
+        if (Types.isSameType(type, Reference)) {
             const entities = this.context.getEntityManager(propDesc.itemType).choiceList()
             const optionList = entities.map(o => ({value: o.id, name: o.shortSummary}) )
             return (

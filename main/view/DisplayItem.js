@@ -4,7 +4,8 @@ const {List} = require('immutable')
 const moment = require('moment')
 const EntityList = require('./EntityList');
 const EntityListItem = () => require('./EntityListItem');
-const Reference = require('../type/Reference')
+
+const {Reference, Types} = require('lsd-metadata')
 
 const DisplayItem = React.createClass({
     render: function () {
@@ -36,7 +37,7 @@ const DisplayItem = React.createClass({
             const displayItemFn = (item) => <EntityListItemType item={item} />
             return <EntityList items={value} itemType={propDesc.itemType} displayItem={displayItemFn} />
         }
-        if (type === Reference) {
+        if (Types.isSameType(type, Reference)) {
             const entity = this.context.getEntityManager(propDesc.itemType).get(value)
             return entity.shortSummary
         }

@@ -1,12 +1,11 @@
 const React = require('react')
-const { connect } = require('react-redux')
 const {PropTypes} = require('react')
 const {List} = require('immutable')
 const EntityList = require('./EntityList')
 const EntityView = require('./EntityView')
 const EntityListItem = require('./EntityListItem')
 const {Grid, Row, Col, Button} = require('react-bootstrap')
-const EntityManager = require('./EntityManager')
+const NavigationManager = require('./NavigationManager')
 
 
 let EntityListWithView = React.createClass({
@@ -20,7 +19,7 @@ let EntityListWithView = React.createClass({
             <Grid>
                 <Row>
                     <Col xs={12} md={3}>
-                        {this.props.onNew ? <Button onClick={this.newObject}>New</Button> : ''}
+                        {this.props.onNew || this.props.navigationManager ? <Button onClick={this.newObject}>New</Button> : ''}
                         <EntityList items={entityManager.choiceList()} selectedItemId={selectedId} onSelect={this.select} displayItem={displayItemFn}/>
                     </Col>
                     <Col xs={12} md={9}>{this.entityView(entity)}</Col>
@@ -39,7 +38,11 @@ let EntityListWithView = React.createClass({
     },
 
     select: function(entity) {
-        this.props.onSelect && this.props.onSelect(entity.id)
+        if (this.props.onSelect) {
+            this.props.onSelect(entity.id)
+        } else {
+            this.props.navigationManager.navigate(entity.id)
+        }
     },
 
     saveEntity: function (entity) {
@@ -51,12 +54,17 @@ let EntityListWithView = React.createClass({
     },
 
     newObject: function() {
-        this.props.onNew && this.props.onNew()
+        if (this.props.onNew) {
+            this.props.onNew()
+        } else {
+            this.props.navigationManager.navigateNew()
+        }
     }
 })
 
 EntityListWithView.propTypes = {
-    entityManager: PropTypes.instanceOf(EntityManager).isRequired,
+    entityManager: PropTypes.object.isRequired,
+    navigationManager: PropTypes.instanceOf(NavigationManager).isRequired,
     entityViewType: PropTypes.func,
     selectedId: PropTypes.string,
     onSelect: PropTypes.func,

@@ -1,6 +1,7 @@
 const React = require('react')
 const {PropTypes} = require('react')
 const GoogleLogin = require('react-google-login')['default']
+const ObservableData = require('lsd-events').ObservableData
 
 const GoogleSignin = React.createClass({
     render: function () {
@@ -22,6 +23,16 @@ const GoogleSignin = React.createClass({
 
 GoogleSignin.propTypes = {
     clientId: PropTypes.string.isRequired
+}
+
+
+GoogleSignin.Tracker = class GoogleSigninTracker {
+    constructor() {
+        this.signIn = new ObservableData()
+        this.signOut = new ObservableData()
+        document.addEventListener('googleSignIn', e =>  this.signIn.value = e.detail.authResponse )
+        document.addEventListener('googleSignOut', e => this.signOut.value = null)
+    }
 }
 
 module.exports = GoogleSignin
