@@ -90,22 +90,23 @@ const FormItem = React.createClass({
 
     formControl: function() {
         const EntityView = EntityViewFn()
-        const {propDesc, type, readOnly, placeholder, viewElement} = this.props
-        const value = (this.state.value === undefined || this.state.value === null) ? "" : this.state.value
+        const {propDesc, type, editable, placeholder, viewElement} = this.props
+        const value = this.state.value
+        const valueOrBlank = (this.state.value === undefined || this.state.value === null) ? "" : this.state.value
 
         if (viewElement) {
             return React.cloneElement(viewElement, {items: value, entityDescriptor: propDesc.itemType.entityDescriptor})
         }
 
-        if (readOnly) {
-            return <FormControl.Static><DisplayItem propDesc={propDesc} value={value}/></FormControl.Static>
+        if (!editable) {
+            return <FormControl.Static><DisplayItem propDesc={propDesc} value={valueOrBlank}/></FormControl.Static>
         }
 
         if (type === String) {
-            return <FormControl type="text" value={value} placeholder={placeholder} onChange={this.handleChange}/>
+            return <FormControl type="text" value={valueOrBlank} placeholder={placeholder} onChange={this.handleChange}/>
         }
         if (type === Number) {
-            return <FormControl type="text" value={value} placeholder={placeholder} onChange={this.handleNumberChange}/>
+            return <FormControl type="text" value={valueOrBlank} placeholder={placeholder} onChange={this.handleNumberChange}/>
         }
         if (type === Date) {
             const displayFormat = "DD MMM YY"
@@ -148,7 +149,7 @@ FormItem.propTypes = {
     placeholder: PropTypes.string,
     help: PropTypes.string,
     error: PropTypes.string,
-    readOnly: PropTypes.bool,
+    editable: PropTypes.bool,
     onChange: PropTypes.func,
 }
 

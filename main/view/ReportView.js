@@ -26,7 +26,7 @@ let ReportView = React.createClass({
         if (propDesc.type === List) {
 
         }
-        return <FormItem key={propDesc.name} type={propDesc.type} readOnly={true} value={value} label={propDesc.label}
+        return <FormItem key={propDesc.name} type={propDesc.type} editable={false} value={value} label={propDesc.label}
                          help={propDesc.help} propDesc={propDesc}/>
     }
 })

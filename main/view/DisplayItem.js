@@ -38,11 +38,15 @@ const DisplayItem = React.createClass({
             return <EntityList items={value} itemType={propDesc.itemType} displayItem={displayItemFn} />
         }
         if (Types.isSameType(type, Reference)) {
-            const entity = this.context.getEntityManager(propDesc.itemType).get(value)
-            return entity.shortSummary
+            if (value) {
+                const entity = this.context.getEntityManager(propDesc.itemType).get(value)
+                return entity.shortSummary
+            } else {
+                return ""
+            }
         }
         if (type.values) {
-            return value.label
+            return value ? value.label : ""
         }
 
         return value.toString()

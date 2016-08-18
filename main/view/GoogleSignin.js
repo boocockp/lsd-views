@@ -1,12 +1,12 @@
 const React = require('react')
 const {PropTypes} = require('react')
 const GoogleLogin = require('react-google-login')['default']
-const ObservableData = require('lsd-events').ObservableData
+const ObservableData = require('lsd-observable').ObservableData
 
 const GoogleSignin = React.createClass({
     render: function () {
         return (
-            <GoogleLogin callback={this._onSignIn} clientId={this.props.clientId}/>
+            <GoogleLogin callback={this._onSignIn} clientId={this.props.clientId} cssClass="btn btn-default" buttonText="Sign in with Google"/>
         )
     },
 

@@ -1,11 +1,11 @@
 module.exports = class NavigationManager {
 
-    constructor(entityType, routerFn) {
+    constructor(entityType, getRouter) {
         this.rootPath = entityType.name.toLowerCase()
-        this.routerFn = routerFn
+        this.getRouter = getRouter
     }
 
-    get listPath() { return "/" + this.rootPath }
+    get mainPath() { return "/" + this.rootPath }
     get newPath() { return "/" + this.rootPath + "/new" }
     get selectedPath() { return "/" + this.rootPath + "/:selectedId" }
 
@@ -15,10 +15,10 @@ module.exports = class NavigationManager {
     }
 
     navigate(id) {
-        this.routerFn().navigate(this.pathTo(id))
+        this.getRouter().navigate(id ? this.pathTo(id) : this.mainPath)
     }
 
     navigateNew() {
-        this.routerFn().navigate(this.pathTo("new"))
+        this.getRouter().navigate(this.pathTo("new"))
     }
 }
