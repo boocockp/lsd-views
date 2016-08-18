@@ -58,8 +58,15 @@ const EntityListEditable = React.createClass({
     },
 
     onSave: function(updatedItem) {
-        const updatedList = this.props.items.set(this.state.indexBeingEdited, updatedItem)
-        this.props.onChange(updatedList)
+        if (this.props.onChangeList) {
+            const updatedList = this.props.items.set(this.state.indexBeingEdited, updatedItem)
+            this.props.onChangeList(updatedList)
+        }
+
+        if (this.props.onChangeItem) {
+            this.props.onChangeItem(updatedItem)
+        }
+
         this.setState(this.getInitialState())
     },
 
@@ -71,7 +78,8 @@ const EntityListEditable = React.createClass({
 EntityListEditable.propTypes = {
     items: PropTypes.instanceOf(List).isRequired,
     itemType: PropTypes.func.isRequired,
-    onChange: PropTypes.func.isRequired,
+    onChangeList: PropTypes.func,
+    onChangeItem: PropTypes.func,
     displayItem: PropTypes.func.isRequired,
     editItem: PropTypes.func.isRequired
 }

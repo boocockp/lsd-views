@@ -39,12 +39,12 @@ let EntityView = React.createClass({
     },
 
     heading: function (entity, entityDescriptor) {
-        if (this.props.heading) {
-            return this.props.heading
+        if (this.props.hasOwnProperty("heading")) {
+            return this.props.heading ? <h2>{this.props.heading}</h2> : ""
         }
 
         const entityName = entityDescriptor.name
-        return _.hasIn(entity, 'id') ? (entity.id ? `${entityName} ${entity.shortSummary}` : `New ${entityName}`) : entityName
+        return _.hasIn(entity, 'id') ? (entity.id ? `${entity.shortSummary}` : `New ${entityName}`) : entityName
     },
 
     onChange: function (name, value) {

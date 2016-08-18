@@ -8,4 +8,8 @@ module.exports = class Util {
         return info
     }
 
+    static pluralize(name) {
+        return name.endsWith("s") ? `${name}es` : `${name}s`
+    }
+
 }

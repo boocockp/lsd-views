@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const React = require('react')
 const {PropTypes} = require('react')
 const {List} = require('immutable')
@@ -6,7 +7,7 @@ const EntityView = require('./EntityView')
 const EntityListItem = require('./EntityListItem')
 const {Grid, Row, Col, Button} = require('react-bootstrap')
 const NavigationManager = require('./NavigationManager')
-
+const {pluralize} = require('./Util')
 
 let EntityListWithView = React.createClass({
     render: function () {
@@ -19,7 +20,10 @@ let EntityListWithView = React.createClass({
             <Grid>
                 <Row>
                     <Col xs={12} md={3}>
-                        {this.props.onNew || this.props.navigationManager ? <Button onClick={this.newObject}>New</Button> : ''}
+                        <h3>{pluralize(entityManager.typeName)}</h3>
+                        <p>
+                            {this.props.onNew || this.props.navigationManager ? <Button onClick={this.newObject} bsSize="xsmall">New</Button> : ''}
+                        </p>
                         <EntityList items={entityManager.choiceList()} selectedItemId={selectedId} onSelect={this.select} displayItem={displayItemFn}/>
                     </Col>
                     <Col xs={12} md={9}>{this.entityView(entity)}</Col>

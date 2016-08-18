@@ -116,7 +116,7 @@ const FormItem = React.createClass({
         if (type === List) {
             const displayItemFn = (item) => <EntityListItem item={item} />
             const editItemFn = (item, onSave) => <EntityView entity={item} onSave={onSave} />
-            return <EntityListEditable items={value} itemType={propDesc.itemType} displayItem={displayItemFn} editItem={editItemFn} onChange={this.handleListChange}/>
+            return <EntityListEditable items={value} itemType={propDesc.itemType} displayItem={displayItemFn} editItem={editItemFn} onChangeList={this.handleListChange}/>
         }
         if (Types.isSameType(type, Reference)) {
             const entities = this.context.getEntityManager(propDesc.itemType).choiceList()
