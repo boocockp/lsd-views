@@ -107,10 +107,10 @@ const FormItem = React.createClass({
         }
 
         if (type === String) {
-            return <FormControl type="text" value={valueOrBlank} placeholder={placeholder} onChange={this.handleChange}/>
+            return <FormControl type="text" value={valueOrBlank} placeholder={placeholder} onChange={this.handleChange} autoFocus={this.props.autoFocus}/>
         }
         if (type === Number) {
-            return <FormControl type="text" value={valueOrBlank} placeholder={placeholder} onChange={this.handleNumberChange}/>
+            return <FormControl type="text" value={valueOrBlank} placeholder={placeholder} onChange={this.handleNumberChange} autoFocus={this.props.autoFocus}/>
         }
         if (type === Date) {
             const displayFormat = "DD MMM YY"
@@ -120,7 +120,7 @@ const FormItem = React.createClass({
         if (type === List) {
             const displayItemFn = (item) => <EntityListItem item={item} />
             const editEntityItemFn = (item, onSave) => <EntityView entity={item} onSave={onSave} />
-            const editSimpleItemFn = (item, onSave) => <SimpleView type={propDesc.itemType} value={item} onSave={onSave} />
+            const editSimpleItemFn = (item, onSave, onCancel) => <SimpleView type={propDesc.itemType} value={item} onSave={onSave} onCancel={onCancel} />
             const editItemFn = Types.isEntity(propDesc.itemType) ? editEntityItemFn : editSimpleItemFn
             return <EntityListEditable items={value} itemType={propDesc.itemType} displayItem={displayItemFn} editItem={editItemFn} onChangeList={this.handleListChange}/>
         }
@@ -157,6 +157,7 @@ FormItem.propTypes = {
     error: PropTypes.string,
     editable: PropTypes.bool,
     onChange: PropTypes.func,
+    autoFocus: PropTypes.bool,
 }
 
 FormItem.contextTypes = {

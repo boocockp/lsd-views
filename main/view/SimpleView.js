@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const React = require('react')
 const {PropTypes} = require('react')
-const {Button} = require('react-bootstrap')
+const {Form, Button} = require('react-bootstrap')
 const FormItem = () => require('./FormItem')
 
 let SimpleView = React.createClass({
@@ -15,16 +15,23 @@ let SimpleView = React.createClass({
     },
 
     value: function () {
-        return this.state.hasOwnProperty("updatedValue") ? this.state.updatedValue : this.props.value
+        return this.isChanged() ? this.state.updatedValue : this.props.value
+    },
+
+    isChanged: function() {
+        return this.state.hasOwnProperty("updatedValue") && this.state.updatedValue !== this.props.value
     },
 
     render: function () {
         const FormItemClass = FormItem()
         return (
-            <div >
-                <FormItemClass type={this.props.type} editable={true} onChange={this.onChange} value={this.value()} label={null} />
-                <Button onClick={this.onSave}>Save</Button>
-            </div>
+            <Form inline onSubmit={this.onSave} onKeyUp={this.onKeyUp}>
+                <FormItemClass type={this.props.type} editable={true} onChange={this.onChange} value={this.value()} label={null} autoFocus/>
+                {" "}
+                <Button type="submit" bsSize="small">Save</Button>
+                {" "}
+                <Button type="button" bsSize="small" onClick={this.props.onCancel}>Cancel</Button>
+            </Form>
         )
     },
 
@@ -34,13 +41,22 @@ let SimpleView = React.createClass({
 
     onSave: function (e) {
         e.preventDefault()
-        const updatedValue = this.state.updatedValue;
-        if (updatedValue !== this.props.value) {
+        if (this.isChanged()) {
+            const updatedValue = this.state.updatedValue;
             console.log('save', updatedValue)
+            this.setState(this.getInitialState())
             this.props.onSave(updatedValue)
-            this.setState({})
         } else {
             console.log('save', 'no change')
+            this.setState(this.getInitialState())
+            this.props.onCancel()
+        }
+    } ,
+
+    onKeyUp: function (e) {
+        const ESC = 27
+        if (e.keyCode === ESC) {
+            this.props.onCancel()
         }
     }
 })
@@ -49,6 +65,7 @@ SimpleView.propTypes = {
     value: PropTypes.any.isRequired,
     type: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
 }
 
 module.exports = SimpleView

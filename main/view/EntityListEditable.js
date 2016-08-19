@@ -2,6 +2,7 @@ const React = require('react')
 const {PropTypes} = require('react')
 const {List} = require('immutable')
 const {Button, ListGroup, ListGroupItem} = require('react-bootstrap')
+const {Types} = require('lsd-metadata')
 
 const EntityListEditable = React.createClass({
     render: function () {
@@ -16,7 +17,7 @@ const EntityListEditable = React.createClass({
         const renderEditItem = (item, index) => {
             return (
                 <ListGroupItem key={item.id || index}>
-                    {this.props.editItem(item, this.onSave)}
+                    {this.props.editItem(item, this.onSave, this.onCancelEdit)}
                 </ListGroupItem>
             )
         }
@@ -28,13 +29,13 @@ const EntityListEditable = React.createClass({
 
         const items = this.props.items
         const itemsToRender = this.state.indexBeingEdited === items.size ? items.push(this.state.itemBeingEdited) : items
-
+        const buttonText = `Add ${Types.isEntity(this.props.itemType) ? this.props.itemType.name : ""}`
         return (
             <div>
                 <ListGroup>
                     { itemsToRender.map(renderItem) }
                     <ListGroupItem key="add">
-                        <Button onClick={this.onAdd}>Add</Button>
+                        <Button bsSize="small" onClick={this.onAdd}>{buttonText}</Button>
                     </ListGroupItem>
                 </ListGroup>
             </div>
