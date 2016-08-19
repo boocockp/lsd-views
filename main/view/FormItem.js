@@ -5,6 +5,7 @@ const {List} = require('immutable')
 const moment = require('moment')
 const EntityListItem = require('./EntityListItem');
 const EntityViewFn = () => require('./EntityView');
+const SimpleView = require('./SimpleView');
 const EntityListEditable = require('./EntityListEditable');
 const DisplayItem = require('./DisplayItem');
 const DateTimeField = require('react-bootstrap-datetimepicker')
@@ -68,12 +69,15 @@ const FormItem = React.createClass({
 
     render: function () {
         const validationState = this.props.error ? "error" : null
+        const label = this.props.label ? <ControlLabel>{this.props.label}</ControlLabel> : ""
+        const error = this.props.error ? <HelpBlock>{this.props.error}</HelpBlock> : this.props.help ? <HelpBlock>{this.props.help}</HelpBlock> : ''
+
         return (
             <FormGroup controlId={this.state.fieldId} validationState={validationState}>
-                <ControlLabel>{this.props.label}</ControlLabel>
+                {label}
                 {this.formControl()}
                 <FormControl.Feedback />
-                {this.props.error ? <HelpBlock>{this.props.error}</HelpBlock> : this.props.help ? <HelpBlock>{this.props.help}</HelpBlock> : ''}
+                {error}
             </FormGroup>
         )
     },
@@ -115,7 +119,9 @@ const FormItem = React.createClass({
         }
         if (type === List) {
             const displayItemFn = (item) => <EntityListItem item={item} />
-            const editItemFn = (item, onSave) => <EntityView entity={item} onSave={onSave} />
+            const editEntityItemFn = (item, onSave) => <EntityView entity={item} onSave={onSave} />
+            const editSimpleItemFn = (item, onSave) => <SimpleView type={propDesc.itemType} value={item} onSave={onSave} />
+            const editItemFn = Types.isEntity(propDesc.itemType) ? editEntityItemFn : editSimpleItemFn
             return <EntityListEditable items={value} itemType={propDesc.itemType} displayItem={displayItemFn} editItem={editItemFn} onChangeList={this.handleListChange}/>
         }
         if (Types.isSameType(type, Reference)) {

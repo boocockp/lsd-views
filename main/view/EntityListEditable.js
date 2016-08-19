@@ -33,8 +33,10 @@ const EntityListEditable = React.createClass({
             <div>
                 <ListGroup>
                     { itemsToRender.map(renderItem) }
+                    <ListGroupItem key="add">
+                        <Button onClick={this.onAdd}>Add</Button>
+                    </ListGroupItem>
                 </ListGroup>
-                <Button onClick={this.onAdd}>New</Button>
             </div>
         )
     },

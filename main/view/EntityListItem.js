@@ -23,7 +23,7 @@ const EntityListItem = ({item}) => {
 
 
 EntityListItem.propTypes = {
-    item: PropTypes.object.isRequired,
+    item: PropTypes.any.isRequired,
 }
 
 module.exports = EntityListItem

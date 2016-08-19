@@ -1,6 +1,7 @@
 const _ = require('lodash')
 const React = require('react')
 const {PropTypes} = require('react')
+const {Button} = require('react-bootstrap')
 const FormItem = require('./FormItem')
 
 let EntityView = React.createClass({
@@ -33,7 +34,7 @@ let EntityView = React.createClass({
                 <div>
                     {propertyNames.map(name => this.formItem(entityDescriptor.propertyDescriptor(name), entity[name]))}
                 </div>
-                <button type="submit" className="btn btn-default" onClick={this.onSave}>Save</button>
+                <Button onClick={this.onSave}>Save</Button>
             </div>
         )
     },
