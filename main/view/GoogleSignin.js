@@ -30,8 +30,8 @@ GoogleSignin.Tracker = class GoogleSigninTracker {
     constructor() {
         this.signIn = new ObservableEvent()
         this.signOut = new ObservableEvent()
-        document.addEventListener('googleSignIn', e =>  this.signIn.value = e.detail.authResponse )
-        document.addEventListener('googleSignOut', e => this.signOut.value = null)
+        document.addEventListener('googleSignIn', e =>  this.signIn.send(e.detail.authResponse) )
+        document.addEventListener('googleSignOut', e => this.signOut.send(null))
     }
 }
 
