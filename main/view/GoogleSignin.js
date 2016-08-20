@@ -1,7 +1,7 @@
 const React = require('react')
 const {PropTypes} = require('react')
 const GoogleLogin = require('react-google-login')['default']
-const ObservableData = require('lsd-observable').ObservableData
+const {ObservableEvent} = require('lsd-observable')
 
 const GoogleSignin = React.createClass({
     render: function () {
@@ -28,8 +28,8 @@ GoogleSignin.propTypes = {
 
 GoogleSignin.Tracker = class GoogleSigninTracker {
     constructor() {
-        this.signIn = new ObservableData()
-        this.signOut = new ObservableData()
+        this.signIn = new ObservableEvent()
+        this.signOut = new ObservableEvent()
         document.addEventListener('googleSignIn', e =>  this.signIn.value = e.detail.authResponse )
         document.addEventListener('googleSignOut', e => this.signOut.value = null)
     }
