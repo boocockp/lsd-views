@@ -1,10 +1,10 @@
 module.exports = {
+    ActivityTracker: require('./view/ActivityTracker'),
     DisplayItem: require('./view/DisplayItem'),
     EntityList: require('./view/EntityList'),
     EntityListEditable: require('./view/EntityListEditable'),
     EntityListItem: require('./view/EntityListItem'),
     EntityListWithView: require('./view/EntityListWithView'),
-    EntityManager: require('./../../lsd-storage/main/store/EntityManager'),
     EntityTable: require('./view/EntityTable'),
     EntityTableRowGroup: require('./view/EntityTableRowGroup'),
     EntityView: require('./view/EntityView'),
