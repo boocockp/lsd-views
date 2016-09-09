@@ -22,7 +22,7 @@ are taken care of by the view component.
 The view created can be customised by passing in other components as properties or child elements.
 
 ### Examples of components in use
-This element will fill the whole page apart from the navigation bar with a list of Accounts and view beside that to edit the currently selected one:
+This element will fill the whole page apart from the navigation bar with a list of Accounts and a view beside that to edit the currently selected one:
 
 ```javascript
    <EntityListWithView entityManager={this.getEntityManager(Account)} entityViewType={AccountView}
