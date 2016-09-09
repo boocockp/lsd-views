@@ -1,6 +1,6 @@
 {
   "name": "lsd-views",
-  "description": "lsd-views",
+  "description": "High-level metadata-driven view components for LSD applications",
   "author": "Paul Boocock <paulb@ashridgetech.com>",
   "version": "0.1.0",
   "files": [
