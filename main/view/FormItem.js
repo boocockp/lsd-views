@@ -144,6 +144,8 @@ const FormItem = React.createClass({
                 )
 
         }
+
+        return `Type: ${type} Value: ${value}`
     }
 })
 

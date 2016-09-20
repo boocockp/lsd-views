@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const React = require('react')
 const {PropTypes} = require('react')
-const {Button} = require('react-bootstrap')
+const {Button, ButtonToolbar} = require('react-bootstrap')
 const FormItem = require('./FormItem')
 
 let EntityView = React.createClass({
@@ -34,7 +34,10 @@ let EntityView = React.createClass({
                 <div>
                     {propertyNames.map(name => this.formItem(entityDescriptor.propertyDescriptor(name), entity[name]))}
                 </div>
-                <Button onClick={this.onSave}>Save</Button>
+                <ButtonToolbar>
+                    <Button bsStyle="primary" onClick={this.onSave}>Save</Button>
+                    {this.props.onCancel ? <Button onClick={this.props.onCancel}>Cancel</Button> : ''}
+                </ButtonToolbar>
             </div>
         )
     },
@@ -82,6 +85,7 @@ let EntityView = React.createClass({
 EntityView.propTypes = {
     entity: PropTypes.object.isRequired,
     onSave: PropTypes.func.isRequired,
+    onCancel: PropTypes.func,
     entityDescriptor: PropTypes.object,
     heading: PropTypes.string,
     propertiesToShow: PropTypes.arrayOf(PropTypes.string),

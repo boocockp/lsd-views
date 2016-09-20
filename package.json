@@ -2,12 +2,12 @@
   "name": "lsd-views",
   "description": "High-level metadata-driven view components for LSD applications",
   "author": "Paul Boocock <paulb@ashridgetech.com>",
-  "version": "0.1.0",
+  "version": "0.1.1-10",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "babel main -d dist",
+    "build": "babel main -d dist && cp -r main/css dist",
     "build-dev": "npm update lsd-metadata && flow && npm run build && npm version prerelease --no-git-tag && date",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
