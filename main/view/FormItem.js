@@ -123,7 +123,7 @@ const FormItem = React.createClass({
 
             if (Types.isEntity(propDesc.itemType)) {
                 const editItemFn = (item, onSave) => <EntityView entity={item} onSave={onSave} />
-                return <EntityListEditable items={value} itemType={propDesc.itemType} displayItem={displayItemFn} editItem={editItemFn} onChangeList={this.handleListChange}/>
+                return <EntityListEditable items={value} entityManager={this.context.getEntityManager(propDesc.itemType)} displayItem={displayItemFn} editItem={editItemFn} onChangeList={this.handleListChange}/>
 
             } else {
                 return <SimpleListEditable items={value} itemType={propDesc.itemType} onChangeList={this.handleListChange}/>

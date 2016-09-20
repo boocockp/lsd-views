@@ -25,12 +25,8 @@ let SimpleView = React.createClass({
     render: function () {
         const FormItemClass = FormItem()
         return (
-            <Form inline onSubmit={this.onSave} onKeyUp={this.onKeyUp}>
+            <Form inline onSubmit={e => e.preventDefault()} onKeyUp={this.onKeyUp}>
                 <FormItemClass type={this.props.type} editable={true} onChange={this.onChange} value={this.value()} label={null} autoFocus/>
-                {" "}
-                <Button type="submit" bsSize="small">Save</Button>
-                {" "}
-                <Button type="button" bsSize="small" onClick={this.props.onCancel}>Cancel</Button>
             </Form>
         )
     },
@@ -39,8 +35,7 @@ let SimpleView = React.createClass({
         this.setState({updatedValue: value})
     },
 
-    onSave: function (e) {
-        e.preventDefault()
+    onSave: function () {
         if (this.isChanged()) {
             const updatedValue = this.state.updatedValue;
             console.log('save', updatedValue)
@@ -54,9 +49,12 @@ let SimpleView = React.createClass({
     } ,
 
     onKeyUp: function (e) {
-        const ESC = 27
+        const ESC = 27, ENTER = 13
         if (e.keyCode === ESC) {
             this.props.onCancel()
+        }
+        if (e.keyCode === ENTER) {
+            this.onSave()
         }
     }
 })

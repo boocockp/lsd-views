@@ -48,16 +48,18 @@ const SimpleListEditable = React.createClass({
     },
 
     onEdit: function (index: number) {
-        console.log('onEdit', index)
         this.setState({indexEdited: index})
     },
 
     onSave: function (updatedItem: any) {
+        const itemAddedAtEnd = this.state.indexEdited === this.props.items.size
+        const nextIndexEdited = itemAddedAtEnd ? this.props.items.size + 1 : this.getInitialState().indexEdited
+
         if (this.props.onChangeList) {
             const updatedList = this.props.items.set(this.state.indexEdited, updatedItem).filter( item => item !== '' && item !== null)
             this.props.onChangeList(updatedList)
         }
-        this.setState(this.getInitialState())
+        this.setState({indexEdited: nextIndexEdited})
     },
 
     onCancelEdit: function () {

@@ -29,7 +29,7 @@ const EntityListEditable = React.createClass({
 
         const items = this.props.items
         const itemsToRender = this.state.itemEditedIsNew ? items.insert(this.state.indexEdited, this.state.itemEdited) : items
-        const buttonText = `Add ${Types.isEntity(this.props.itemType) ? this.props.itemType.name : ""}`
+        const buttonText = `Add ${this.props.entityManager.typeName}`
         const listItems = itemsToRender.map(renderItem)
         const button = <Button bsSize="small" onClick={this.onAdd}>{buttonText}</Button>
 
@@ -73,7 +73,7 @@ const EntityListEditable = React.createClass({
 
     onAdd: function () {
         console.log('onAdd')
-        const item = new this.props.itemType()
+        const item = this.props.entityManager.newInstance()
         const addedItemIndex = this.props.addButtonPosition === `top` ? 0 : this.props.items.size
         this.setState({itemEdited: item, indexEdited: addedItemIndex, itemEditedIsNew: true})
     },
@@ -100,7 +100,7 @@ const EntityListEditable = React.createClass({
 
 EntityListEditable.propTypes = {
     items: PropTypes.instanceOf(List).isRequired,
-    itemType: PropTypes.func.isRequired,
+    entityManager: PropTypes.object.isRequired,
     onChangeList: PropTypes.func,
     onChangeItem: PropTypes.func,
     displayItem: PropTypes.func.isRequired,
