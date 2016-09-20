@@ -7,6 +7,7 @@ const EntityListItem = require('./EntityListItem');
 const EntityViewFn = () => require('./EntityView');
 const SimpleView = require('./SimpleView');
 const EntityListEditable = require('./EntityListEditable');
+const SimpleListEditable = require('./SimpleListEditable');
 const DisplayItem = require('./DisplayItem');
 const DateTimeField = require('react-bootstrap-datetimepicker')
 
@@ -119,10 +120,14 @@ const FormItem = React.createClass({
         }
         if (type === List) {
             const displayItemFn = (item) => <EntityListItem item={item} />
-            const editEntityItemFn = (item, onSave) => <EntityView entity={item} onSave={onSave} />
-            const editSimpleItemFn = (item, onSave, onCancel) => <SimpleView type={propDesc.itemType} value={item} onSave={onSave} onCancel={onCancel} />
-            const editItemFn = Types.isEntity(propDesc.itemType) ? editEntityItemFn : editSimpleItemFn
-            return <EntityListEditable items={value} itemType={propDesc.itemType} displayItem={displayItemFn} editItem={editItemFn} onChangeList={this.handleListChange}/>
+
+            if (Types.isEntity(propDesc.itemType)) {
+                const editItemFn = (item, onSave) => <EntityView entity={item} onSave={onSave} />
+                return <EntityListEditable items={value} itemType={propDesc.itemType} displayItem={displayItemFn} editItem={editItemFn} onChangeList={this.handleListChange}/>
+
+            } else {
+                return <SimpleListEditable items={value} itemType={propDesc.itemType} onChangeList={this.handleListChange}/>
+            }
         }
         if (Types.isSameType(type, Reference)) {
             const entities = this.context.getEntityManager(propDesc.itemType).choiceList()

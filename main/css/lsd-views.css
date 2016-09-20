@@ -1,3 +1,8 @@
 .list-add-button-top {
     margin: 10px 0;
 }
+
+.list-group-item .placeholder {
+    font-style: italic;
+    color: #d0d0d0
+}
