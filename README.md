@@ -46,3 +46,10 @@ AccountView.propTypes = EntityView.propTypes
 
 It shows a standard `EntityView` but overrides which properties are shown and the type of view used to display one of the properties.
 
+##Development
+
+###Testing
+The component unit tests run under Node using a simulated DOM.  They use [Mocha](https://mochajs.org/) and [Chai](http://chaijs.com/).
+
+They render the component and interact with it using [Enzyme](http://airbnb.io/enzyme/) with the Full Rendering approach (the `mount` method).
+The fake DOM is created with [jsdom](https://github.com/tmpvar/jsdom).

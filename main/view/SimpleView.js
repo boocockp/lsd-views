@@ -1,13 +1,14 @@
-const _ = require('lodash')
-const React = require('react')
-const {PropTypes} = require('react')
-const {Form, Button} = require('react-bootstrap')
+// @flow
+
+import React from'react'
+import {PropTypes} from'react'
+import {Form} from'react-bootstrap'
 const FormItem = () => require('./FormItem')
 
 let SimpleView = React.createClass({
 
     getInitialState: function () {
-        return {}
+        return {updatedValue: undefined}
     },
 
     componentWillReceiveProps: function () {
@@ -19,7 +20,7 @@ let SimpleView = React.createClass({
     },
 
     isChanged: function() {
-        return this.state.hasOwnProperty("updatedValue") && this.state.updatedValue !== this.props.value
+        return this.state.updatedValue !== undefined && this.state.updatedValue !== this.props.value
     },
 
     render: function () {
@@ -31,27 +32,28 @@ let SimpleView = React.createClass({
         )
     },
 
-    onChange: function (value) {
+    onChange: function (value: String) {
         this.setState({updatedValue: value})
     },
 
     onSave: function () {
         if (this.isChanged()) {
             const updatedValue = this.state.updatedValue;
-            console.log('save', updatedValue)
-            this.setState(this.getInitialState())
             this.props.onSave(updatedValue)
         } else {
-            console.log('save', 'no change')
-            this.setState(this.getInitialState())
-            this.props.onCancel()
+            this.onCancel()
         }
-    } ,
+    },
 
-    onKeyUp: function (e) {
+    onCancel: function () {
+        this.setState(this.getInitialState())
+        this.props.onCancel()
+    },
+
+    onKeyUp: function (e: Object) {
         const ESC = 27, ENTER = 13
         if (e.keyCode === ESC) {
-            this.props.onCancel()
+            this.onCancel()
         }
         if (e.keyCode === ENTER) {
             this.onSave()

@@ -2,14 +2,14 @@
   "name": "lsd-views",
   "description": "High-level metadata-driven view components for LSD applications",
   "author": "Paul Boocock <paulb@ashridgetech.com>",
-  "version": "0.1.1",
+  "version": "0.1.2-0",
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "babel main -d dist && cp -r main/css dist",
     "build-dev": "npm update lsd-metadata && flow && npm run build && npm version prerelease --no-git-tag && date",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --recursive --ui bdd  --require test/setupDom.js --compilers js:babel-register test/view"
   },
   "main": "dist/index.js",
   "dependencies": {
@@ -19,7 +19,7 @@
     "lsd-metadata": "^0.1.1",
     "lsd-observable": "^0.1.1",
     "moment": "^2.14.1",
-    "react": "^15.2.1",
+    "react": "^15.3.2",
     "react-bootstrap": "^0.30.0",
     "react-bootstrap-datetimepicker": "0.0.22",
     "react-dom": "^15.2.1",
@@ -37,8 +37,10 @@
     "babel-register": "^6.11.6",
     "chai": "^3.5.0",
     "chai-subset": "^1.2.2",
+    "enzyme": "^2.4.1",
     "flow-bin": "^0.30.0",
     "mocha": "^3.0.2",
+    "react-addons-test-utils": "^15.3.2",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0"
   },
